@@ -11,7 +11,7 @@ from project.cmake import CMake
 from project.project import Project
 
 @click.command("create-project")
-@click.argument("project_name", required=True, type=click.STRING)
+@click.argument("project_name", required=True, type=click.Choice(["C", "C++"]))
 @click.argument("project_type", required=True, type=click.Choice(["Executable", "Static Library", "Shared Library", "Interface Library"]))
 @click.argument("project_author", required=True, type=click.STRING)
 @click.argument("project_namespace", required=False, type=click.STRING, default="")
