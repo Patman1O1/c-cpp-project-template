@@ -19,6 +19,7 @@ from project.project import Project
 @click.argument("project_version", required=False, type=click.STRING, default="0.1.0")
 @click.argument("project_description", required=False, type=click.STRING, default="")
 def main(project_name: str,
+         project_language: str,
          project_type: str,
          project_author: str,
          project_namespace: str,
@@ -27,6 +28,7 @@ def main(project_name: str,
     try:
         # Create a new instance of Project
         project: Project = Project(project_name,
+                                   project_language,
                                    project_type,
                                    project_author,
                                    project_namespace,
