@@ -6,9 +6,9 @@ import shutil
 # Pip Imports
 import click
 
-from cproject.cmake import CMake
 # Local Imports
-from cproject.project import Project
+from project.cmake import CMake
+from project.project import Project
 
 @click.command("create-project")
 @click.argument("project_name", required=True, type=click.STRING)
