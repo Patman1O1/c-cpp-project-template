@@ -13,14 +13,6 @@ dependencies = [
     "click",
 ]
 
-[project.optional-dependencies]
-test = [
-    "pytest>=7.0",
-    "pytest-cov>=4.0",
-    "PyGithub>=2.0.0",
-    "gitpython",
-]
-
 [project.scripts]
 create-project = "cproject.main:main"
 
@@ -28,15 +20,4 @@ create-project = "cproject.main:main"
 where = ["src"]
 include = ["cproject*"]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-
 addopts = "-v --strict-markers"
-
-markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "integration: marks integration tests",
-]
-
-python_files = ["test_*.py", "*_test.py"]
-python_functions = ["test_*"]
