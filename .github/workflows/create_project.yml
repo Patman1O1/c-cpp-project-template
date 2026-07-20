@@ -4,7 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       type:
-        description: "The type of project that will be created."
+        description: "The type of project that will be created. 
+                      Valid types are \"Executable\", \"Static Library\",
+                      \"Shared Library\", and \"Interface Library\""
         required: true
         type: choice
         options:
