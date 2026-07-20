@@ -13,8 +13,6 @@ from project.languages import LANGUAGES
 
 
 class Project(object):
-    C_PATTERN: Final[re.Pattern[str]] = re.compile(r"^[Cc]$")
-    CXX_PATTERN: Final[re.Pattern[str]] = re.compile(r"^c(?:\+\+|pp|xx)$", re.IGNORECASE)
     TYPES: Final[list[str]] = ["Static Library", "Shared Library", "Interface Library", "Executable"]
     ROOT: Final[Path] = Path(__file__).resolve().parents[4]
 
