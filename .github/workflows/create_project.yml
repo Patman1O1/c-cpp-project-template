@@ -23,7 +23,13 @@ on:
           - "Interface Library"
 
       namespace:
-        description: "The namespace that will be applied to CMake targets."
+        description: "The namespace that will be applied to CMake targets and is the
+                      name of the directory that all header files will be under. For
+                      example, if namespace is my_namespace, then the path to all 
+                      header files will be \"my_namespace/header.h\" if the language 
+                      is C and \"my_namespace/header.hpp\" if the language is C++.
+                      This parameter is optional and will default to the to name
+                      of the GitHub repository if left empty."
         required: false
         type: string
         default: ""
