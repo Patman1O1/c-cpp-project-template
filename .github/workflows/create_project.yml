@@ -38,7 +38,7 @@ permissions:
 
 jobs:
   create_project:
-    if: github.repository != 'Patman1O1/c-project-template'
+    if: github.repository != 'Patman1O1/c-cxx-project-template'
     runs-on: ubuntu-latest
 
     steps:
