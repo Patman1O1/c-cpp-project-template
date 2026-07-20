@@ -3,6 +3,13 @@ name: "Create Project"
 on:
   workflow_dispatch:
     inputs:
+      language:
+        description: "The language the project will be in. Valid languages are C and C++"
+        required: true
+        options:
+          - "C"
+          - "C++"
+
       type:
         description: "The type of project that will be created. 
                       Valid types are \"Executable\", \"Static Library\",
