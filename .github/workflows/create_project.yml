@@ -11,9 +11,9 @@ on:
           - "C++"
 
       type:
-        description: "The type of project that will be created. 
-                      Valid types are \"Executable\", \"Static Library\",
-                      \"Shared Library\", and \"Interface Library\""
+        description: "The type of project that will be created. Valid types are
+                      \"Executable\", \"Static Library\", \"Shared Library\", and
+                      \"Interface Library\"."
         required: true
         type: choice
         options:
