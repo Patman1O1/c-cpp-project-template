@@ -1,6 +1,5 @@
 # Builtin Imports
 from pathlib import Path
-import re
 import shutil
 
 # Pip Imports
@@ -46,28 +45,29 @@ class Project(object):
         self._env.filters["to_screaming_case"] = to_screaming_case
         self._env.filters["to_pascal_case"] = to_pascal_case
 
-    def render(self, cmake_version: str) -> None:
+    def render(self, cmake_version: str, output: Path) -> None:
+        templates: Path = Project.ROOT/"template"
 
-        return
+        skip = {
+            "Executable": {"include", "test_package"},
+            "Interface Library": {"src"},
+        }.get(self.type, set())
 
-    def render_old(self, cmake: CMake) -> None:  # raises ValueError, jinja2.TemplateNotFound
-        # Remove irrelevant directories based on the project type
-        if self.type == "Executable":
-            shutil.rmtree(Project.ROOT/"include")
-            shutil.rmtree(Project.ROOT/"test_package")
-        elif self.type == "Interface Library":
-            shutil.rmtree(Project.ROOT/"src")
+        for path in templates.rglob("*.j2"):
+            rel: Path = path.relative_to(templates)
+            if rel.parts[0] in skip:
+                continue
 
-        entries: list[Path] = sorted(Project.ROOT.rglob("*"), key=lambda p: len(p.parts), reverse=True)
+            # Interpolate {{ }} in every path segment, then drop the .j2 suffix
+            parts: list[str] = [self._env.from_string(p).render(project=self,
+                                                                language=self.language,
+                                                                cmake_version=cmake_version) for p in rel.parts]
+            parts[-1] = parts[-1].removesuffix(".j2")
+            dest: Path = output.joinpath(*parts)
 
-        for path in entries:
-            if path.is_file() and path.suffix == ".j2":
-                template: Template = self._env.get_template(path.relative_to(Project.ROOT).as_posix())
-                path.write_text(template.render(project=self, cmake=cmake), encoding="utf-8")
-
-        for path in entries:
-            name: str = path.name.removesuffix(".j2")
-            if "{{" in name:
-                name = self._env.from_string(name).render(project=self, cmake=cmake)
-            if name != path.name:
-                path.rename(path.with_name(name))
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_text(
+                self._env.get_template(rel.as_posix()).render(project=self,
+                                                              language=self.language,
+                                                              cmake_version=cmake_version), encoding="utf-8",
+            )
