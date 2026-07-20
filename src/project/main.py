@@ -1,14 +1,20 @@
 # Builtin Imports
+from typing import Final
 import sys
 import traceback
-import shutil
 
 # Pip Imports
 import click
 
 # Local Imports
-from project.cmake import CMake
 from project.project import Project
+from project.language import Language
+
+CMAKE_VERSION: Final[str] = "4.3.0"
+LANGUAGES: Final[dict[str, Language]] = {
+    "C": Language(name="C", std=23, hdr_ext=".h", src_ext=".c"),
+    "C++": Language(name="C++", std=26, hdr_ext=".hpp", src_ext=".cpp")
+}
 
 @click.command("create-project")
 @click.argument("project_name", required=True, type=click.STRING)
@@ -28,7 +34,7 @@ def main(project_name: str,
     try:
         # Create a new instance of Project
         project: Project = Project(project_name,
-                                   project_language,
+                                   LANGUAGES[project_language],
                                    project_type,
                                    project_author,
                                    project_namespace,
@@ -36,7 +42,7 @@ def main(project_name: str,
                                    project_description)
 
         # Render the project
-        project.render(CMake(version="4.3.0", c_std=23, cxx_std=23))
+        project.render(CMAKE_VERSION)
 
         return 0
     except Exception as e:
