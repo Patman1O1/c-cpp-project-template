@@ -1,3 +1,4 @@
+{%- if language.name == "C" %}
 #ifndef {{ project.name|to_screaming_case }}_H
 #define {{ project.name|to_screaming_case }}_H
 
@@ -10,3 +11,9 @@ extern "C" {
 #endif // #ifdef __cplusplus
 
 #endif // #ifndef {{ project.name|to_screaming_case }}_H
+{%- elif language.name == "C++" %}
+#ifndef {{ project.name|to_screaming_case }}_HPP
+#define {{ project.name|to_screaming_case }}_HPP
+
+#endif // #ifndef {{ project.name|to_screaming_case }}_HPP
+{%- endif %}
