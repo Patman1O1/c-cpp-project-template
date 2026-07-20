@@ -14,10 +14,10 @@ dependencies = [
 ]
 
 [project.scripts]
-create-project = "cproject.main:main"
+create-project = "project.main:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["cproject*"]
+include = ["project*"]
 
 addopts = "-v --strict-markers"
