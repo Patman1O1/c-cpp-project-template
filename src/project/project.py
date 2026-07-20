@@ -9,14 +9,14 @@ from jinja2 import Template, Environment, FileSystemLoader
 # Local Imports
 from project.format import *
 from project.cmake import CMake
+from project.language import Language
 
 class Project(object):
-    TYPES: Final[list[str]] = ["Static Library", "Shared Library", "Interface Library", "Executable"]
     ROOT: Final[Path] = Path(__file__).resolve().parents[4]
 
     def __init__(self,
                  project_name: str,
-                 project_language: str,
+                 project_language: Language,
                  project_type: str,
                  project_author: str,
                  project_namespace: str = "",
@@ -24,7 +24,7 @@ class Project(object):
                  project_description: str = "") -> None: # raises ValueError
         self.name: str = project_name
         self.package_name: str = to_pascal_case(project_name)
-        self.language: str = project_language
+        self.language: Language = project_language
         self.type: str = project_type
         self.author: str = project_author
         self.namespace: str = project_namespace
@@ -38,30 +38,6 @@ class Project(object):
         )
 
     @property
-    def name(self) -> str: return self._name
-
-    @name.setter
-    def name(self, value: str) -> None: self._name: str = to_snake_case(value)
-
-    @property
-    def type(self) -> str: return self._type
-
-    @type.setter
-    def type(self, value: str) -> None: # raises ValueError
-        for project_type in Project.TYPES:
-            if value == project_type:
-                self._type = value
-                return
-        raise ValueError(f"Invalid project type: '{value}'")
-
-    @property
-    def namespace(self) -> str: return self._namespace
-
-    @namespace.setter
-    def namespace(self, value: str) -> None:
-        self._namespace: str = value if to_snake_case(value) != "" else self.name
-
-    @property
     def env(self) -> Environment: return self._env
 
     @env.setter
@@ -70,7 +46,11 @@ class Project(object):
         self._env.filters["to_screaming_case"] = to_screaming_case
         self._env.filters["to_pascal_case"] = to_pascal_case
 
-    def render(self, cmake: CMake) -> None:  # raises ValueError, jinja2.TemplateNotFound
+    def render(self, cmake_version: str) -> None:
+
+        return
+
+    def render_old(self, cmake: CMake) -> None:  # raises ValueError, jinja2.TemplateNotFound
         # Remove irrelevant directories based on the project type
         if self.type == "Executable":
             shutil.rmtree(Project.ROOT/"include")
