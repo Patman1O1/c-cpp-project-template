@@ -27,7 +27,7 @@ add_library({{ project.namespace }}::{{ project.name }} ALIAS {{ project.name }}
 # Target sources
 target_sources({{ project.name }}
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/{{ project.name }}.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/{{ project.name }}{{ language.src_ext }}
 )
 
 {% if project.type == "Static Library" or project.type == "Shared Library" %}
@@ -54,14 +54,18 @@ include(GenerateExportHeader)
 
 if(BUILD_SHARED_LIBS)
     # Export file name for a shared build
-    set(EXPORT_HEADER_FILE export_shared.h)
+    set(EXPORT_HEADER_FILE export_shared{{ language.hdr_ext }})
 
     # Primary target properties
     set_target_properties({{ project.name }} PROPERTIES
             OUTPUT_NAME {{ project.name }}
             VERSION ${PROJECT_VERSION}
             SOVERSION ${PROJECT_VERSION_MAJOR}
+            {%- if language.name == "C" %}
             C_VISIBILITY_PRESET hidden
+            {%- elif language.name == "C++" %}
+            CXX_VISIBILITY_PRESET hidden
+            {%- endif %}
             VISIBILITY_INLINES_HIDDEN ON
     )
 
@@ -72,7 +76,7 @@ if(BUILD_SHARED_LIBS)
     )
 else()
     # Export file name for a static build
-    set(EXPORT_HEADER_FILE export_static.h)
+    set(EXPORT_HEADER_FILE export_static{{ language.hdr_ext }})
 
     # Primary target properties
     set_target_properties({{ project.name }} PROPERTIES
