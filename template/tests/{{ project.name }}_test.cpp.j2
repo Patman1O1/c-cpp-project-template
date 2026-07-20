@@ -2,9 +2,9 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-{% if project.type != "Executable" %}
+{%- if project.type != "Executable" %}
 // Local Includes
-#include <{{ project.namespace }}/{{ project.name }}.h>
+#include <{{ project.namespace }}/{{ project.name }}{{ language.hdr_ext }}>
 {% endif %}
 
 namespace {{ project.name }}_testing {
