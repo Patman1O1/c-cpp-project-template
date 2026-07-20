@@ -9,8 +9,6 @@ from jinja2 import Template, Environment, FileSystemLoader
 # Local Imports
 from project.format import *
 from project.cmake import CMake
-from project.languages import LANGUAGES
-
 
 class Project(object):
     TYPES: Final[list[str]] = ["Static Library", "Shared Library", "Interface Library", "Executable"]
@@ -18,7 +16,7 @@ class Project(object):
 
     def __init__(self,
                  project_name: str,
-                 project_lang: str,
+                 project_language: str,
                  project_type: str,
                  project_author: str,
                  project_namespace: str = "",
@@ -26,7 +24,7 @@ class Project(object):
                  project_description: str = "") -> None: # raises ValueError
         self.name: str = project_name
         self.package_name: str = to_pascal_case(project_name)
-        self.lang: str = project_lang
+        self.language: str = project_language
         self.type: str = project_type
         self.author: str = project_author
         self.namespace: str = project_namespace
@@ -44,15 +42,6 @@ class Project(object):
 
     @name.setter
     def name(self, value: str) -> None: self._name: str = to_snake_case(value)
-
-    @property
-    def lang(self) -> str: return self._lang
-
-    @lang.setter
-    def lang(self, value: str) -> None: # raises ValueError
-        if not Project.C_PATTERN.match(value) and not Project.CXX_PATTERN.match(value):
-            raise ValueError(f"Invalid language: '{value}'")
-
 
     @property
     def type(self) -> str: return self._type
