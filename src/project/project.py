@@ -9,6 +9,7 @@ from jinja2 import Template, Environment, FileSystemLoader
 # Local Imports
 from project.format import *
 from project.cmake import CMake
+from project.languages import LANGUAGES
 
 
 class Project(object):
