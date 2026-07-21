@@ -1,14 +1,12 @@
 # Builtin Imports
-import os
 from pathlib import Path
 import shutil
 
 # Pip Imports
-from jinja2 import Template, Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader
 
 # Local Imports
 from project.format import *
-from project.cmake import CMake
 from project.language import Language
 
 class Project(object):
