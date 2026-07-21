@@ -71,5 +71,12 @@ class Project(object):
                                                               cmake_version=cmake_version), encoding="utf-8",
             )
 
-        # Remove the template directory
+        # Remove the template/ directory
         shutil.rmtree(template_dir)
+
+        # Remove the .github/ directory
+        shutil.rmtree(Project.ROOT/".github")
+
+        # Write the project description to the README.md file
+        with open(Project.ROOT/"README.md", "w", encoding="utf-8") as readme_md:
+            readme_md.write(f"# {self.name}\n\n{self.description}\n")
