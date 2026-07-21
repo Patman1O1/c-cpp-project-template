@@ -1,4 +1,5 @@
 # Builtin Imports
+import os
 from pathlib import Path
 import shutil
 
@@ -46,15 +47,15 @@ class Project(object):
         self._env.filters["to_pascal_case"] = to_pascal_case
 
     def render(self, cmake_version: str, output: Path) -> None:
-        templates: Path = Project.ROOT/"template"
+        template_dir: Path = Project.ROOT/"template"
 
         skip = {
             "Executable": {"include", "test_package"},
             "Interface Library": {"src"},
         }.get(self.type, set())
 
-        for path in templates.rglob("*.j2"):
-            rel: Path = path.relative_to(templates)
+        for path in template_dir.rglob("*.j2"):
+            rel: Path = path.relative_to(template_dir)
             if rel.parts[0] in skip:
                 continue
 
@@ -71,3 +72,6 @@ class Project(object):
                                                               language=self.language,
                                                               cmake_version=cmake_version), encoding="utf-8",
             )
+
+        # Remove the template directory
+        shutil.rmtree(template_dir)
