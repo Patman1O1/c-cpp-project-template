@@ -68,13 +68,6 @@ jobs:
             "0.1.0" \
             "${{ github.event.repository.description }}"
 
-      - name: Update README.md
-        run: |
-          printf '# %s\n%s\n' "${{ github.event.repository.name }}" "${{ github.event.repository.description }}" > "${GITHUB_WORKSPACE}/README.md"
-
-      - name: Remove .github directory
-        run: rm -rf "${GITHUB_WORKSPACE}/.github"
-
       - name: Commit changes
         run: |
           git add -A
