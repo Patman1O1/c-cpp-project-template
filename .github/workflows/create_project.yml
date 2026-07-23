@@ -60,12 +60,13 @@ jobs:
 
       - name: Create Project
         run: |
-          create-project \
-            "${{ github.event.repository.name }}" \
-            "${{ github.event.inputs.project_type }}" \
-            "${{ github.actor }}" \
+          create-project                                   \
+            "${{ github.event.repository.name }}"          \
+            "${{ github.event.inputs.language }}"          \
+            "${{ github.event.inputs.type }}"              \
+            "${{ github.actor }}"                          \
             "${{ github.event.inputs.project_namespace }}" \
-            "0.1.0" \
+            "0.1.0"                                        \
             "${{ github.event.repository.description }}"
 
       - name: Commit changes
