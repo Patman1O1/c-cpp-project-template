@@ -56,7 +56,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
 
       - name: Install Tools
-        run: pip install -e "${GITHUB_WORKSPACE}/.github/python"
+        run: pip install -e "${GITHUB_WORKSPACE}"
 
       - name: Create Project
         run: |
