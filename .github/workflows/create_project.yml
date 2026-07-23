@@ -32,7 +32,7 @@ on:
                       of the GitHub repository if left empty."
         required: false
         type: string
-        default: "${{ github.event.repository.name }}"
+        default: ""
 permissions:
   contents: write
 
