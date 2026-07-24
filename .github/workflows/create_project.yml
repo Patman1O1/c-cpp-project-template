@@ -36,6 +36,10 @@ on:
 permissions:
   contents: write
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   create_project:
     if: github.repository != 'Patman1O1/c-cxx-project-template'
