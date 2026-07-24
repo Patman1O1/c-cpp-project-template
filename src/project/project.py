@@ -44,7 +44,7 @@ class Project(object):
         self._env.filters["to_screaming_case"] = to_screaming_case
         self._env.filters["to_pascal_case"] = to_pascal_case
 
-    def render(self, cmake_version: str, output: Path) -> None:
+    def render(self, cmake_version: str) -> None:
         template_dir: Path = Project.ROOT/"template"
 
         skip = {
@@ -62,7 +62,7 @@ class Project(object):
                                                                 language=self.language,
                                                                 cmake_version=cmake_version) for p in rel.parts]
             parts[-1] = parts[-1].removesuffix(".j2")
-            dest: Path = output.joinpath(*parts)
+            dest: Path = Project.ROOT.joinpath(*parts)
 
             dest.parent.mkdir(parents=True, exist_ok=True)
             dest.write_text(
