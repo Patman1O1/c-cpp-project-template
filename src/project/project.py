@@ -85,14 +85,6 @@ class Project(object):
         # Remove pyproject.toml
         os.unlink(Project.ROOT/"pyproject.toml")
 
-        # Remove src/ if the project type is an Interface Library
-        if self.type == "Interface Library":
-            shutil.rmtree(Project.ROOT/"src")
-            return
-
-        # Remove include/ if the project type is an Executable
-        if self.type == "Executable":
-            shutil.rmtree(Project.ROOT/"include")
-
-        # Remove all .py source files at src/project/
+        # Remove all .py source files at src/project/ if the project type
+        # is not an Interface Library
         shutil.rmtree(Project.ROOT/"src"/"project")
