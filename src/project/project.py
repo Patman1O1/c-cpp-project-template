@@ -21,12 +21,12 @@ class Project(object):
                  project_namespace: str = "",
                  project_version: str = "0.1.0",
                  project_description: str = "") -> None: # raises ValueError
-        self.name: str = project_name
+        self.name: str = to_snake_case(project_name)
         self.package_name: str = to_pascal_case(project_name)
         self.language: Language = project_language
         self.type: str = project_type
         self.author: str = project_author
-        self.namespace: str = project_namespace
+        self.namespace: str = to_snake_case(project_namespace)
         self.version: str = project_version
         self.description: str = project_description
 
