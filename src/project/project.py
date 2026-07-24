@@ -28,24 +28,24 @@ class Project(object):
         self.namespace: str = project_namespace
         self.version: str = project_version
         self.description: str = project_description
-        self.env: Environment = Environment(
-            loader=FileSystemLoader(Project.ROOT),
+
+    @staticmethod
+    def _create_env(search_path: Path) -> Environment:
+        env: Environment = Environment(
+            loader=FileSystemLoader(search_path),
             keep_trailing_newline=True,
             trim_blocks=True,
             lstrip_blocks=True,
         )
 
-    @property
-    def env(self) -> Environment: return self._env
+        env.filters["to_screaming_case"] = to_screaming_case
+        env.filters["to_pascal_case"] = to_pascal_case
 
-    @env.setter
-    def env(self, value: Environment) -> None:
-        self._env = value
-        self._env.filters["to_screaming_case"] = to_screaming_case
-        self._env.filters["to_pascal_case"] = to_pascal_case
+        return env
 
     def render(self, cmake_version: str) -> None:
         template_dir: Path = Project.ROOT/"template"
+        env = Project._create_env(template_dir)
 
         skip = {
             "Executable": {"include", "test_package"},
@@ -58,17 +58,17 @@ class Project(object):
                 continue
 
             # Interpolate {{ }} in every path segment, then drop the .j2 suffix
-            parts: list[str] = [self._env.from_string(p).render(project=self,
-                                                                language=self.language,
-                                                                cmake_version=cmake_version) for p in rel.parts]
+            parts: list[str] = [env.from_string(p).render(project=self,
+                                                          language=self.language,
+                                                          cmake_version=cmake_version) for p in rel.parts]
             parts[-1] = parts[-1].removesuffix(".j2")
             dest: Path = Project.ROOT.joinpath(*parts)
 
             dest.parent.mkdir(parents=True, exist_ok=True)
             dest.write_text(
-                self._env.get_template(rel.as_posix()).render(project=self,
-                                                              language=self.language,
-                                                              cmake_version=cmake_version), encoding="utf-8",
+                env.get_template(rel.as_posix()).render(project=self,
+                                                        language=self.language,
+                                                        cmake_version=cmake_version), encoding="utf-8",
             )
 
         # Remove the template/ directory
