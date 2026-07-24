@@ -76,5 +76,9 @@ jobs:
       - name: Commit changes
         run: |
           git add -A
-          git commit -m "Create ${GITHUB_REPOSITORY}" || echo "No changes to commit"
+          if git diff --cached --quiet; then
+            echo "::error::create-project produced no changes"
+            exit 1
+          fi
+          git commit -m "Create ${GITHUB_REPOSITORY}"
           git push
