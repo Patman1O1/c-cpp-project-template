@@ -10,7 +10,7 @@ from project.format import *
 from project.language import Language
 
 class Project(object):
-    ROOT: Final[Path] = Path(__file__).resolve().parents[4]
+    ROOT: Final[Path] = Path(__file__).resolve().parents[2]
 
     def __init__(self,
                  project_name: str,
