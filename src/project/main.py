@@ -30,7 +30,7 @@ def main(project_name: str,
          project_author: str,
          project_namespace: str,
          project_version: str,
-         project_description: str) -> int:
+         project_description: str) -> int: # raises SystemExit
     try:
         # Create a new instance of Project
         project: Project = Project(project_name,
@@ -47,7 +47,7 @@ def main(project_name: str,
         return 0
     except Exception as e:
         traceback.print_exception(e)
-        return 1
+        raise SystemExit(1)
 
 if __name__ == "__main__":
     sys.exit(main())
