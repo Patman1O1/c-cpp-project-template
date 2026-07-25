@@ -5,9 +5,9 @@ cmake_minimum_required(VERSION {{ cmake_version }})
 project("{{ project.name }}"
         VERSION {{ project.version }}
         DESCRIPTION "{{ project.description }}"
-        {% if language.name == "C" -%}
+        {% if language.name == "C" %}
         LANGUAGES C
-        {% elif language.name == "C++" -%}
+        {% elif language.name == "C++" %}
         LANGUAGES CXX
         {% endif -%}
 )
