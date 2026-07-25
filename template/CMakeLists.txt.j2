@@ -5,11 +5,11 @@ cmake_minimum_required(VERSION {{ cmake_version }})
 project("{{ project.name }}"
         VERSION {{ project.version }}
         DESCRIPTION "{{ project.description }}"
-        {% if language.name == "C" %}
+        {%- if language.name == "C" %}
         LANGUAGES C
-        {% elif language.name == "C++" %}
+        {%- elif language.name == "C++" %}
         LANGUAGES CXX
-        {% endif -%}
+        {%- endif %}
 )
 
 # CMake Information
@@ -23,19 +23,19 @@ cmake_file_api(
 # Settings
 #-----------------------------------------------------------------------------------------------------------------------
 if(PROJECT_IS_TOP_LEVEL)
+    {%- if language.name == "C" %}
     # C Settings
-    {% if language.name == "C" %}
     set(CMAKE_C_STANDARD {{ language.std }})
     set(CMAKE_C_STANDARD_REQUIRED ON)
     set(CMAKE_C_EXTENSIONS OFF)
     set(CMAKE_C_VISIBILITY_PRESET hidden)
-    {% elif language.name == "C++" %}
+    {%- elif language.name == "C++" %}
     # C++ Settings
     set(CMAKE_CXX_STANDARD {{ language.std }})
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
     set(CMAKE_CXX_EXTENSIONS OFF)
     set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-    {% endif %}
+    {%- endif %}
     set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
     set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -45,11 +45,11 @@ if(PROJECT_IS_TOP_LEVEL)
     set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
     # Project Options
-    {% if project.type == "Shared Library" %}
+    {%- if project.type == "Shared Library" %}
     option(BUILD_SHARED_LIBS "Build the project as a shared library" ON)
-    {% elif project.type == "Static Library" %}
+    {%- elif project.type == "Static Library" %}
     option(BUILD_SHARED_LIBS "Build the project as a shared library" OFF)
-    {% endif %}
+    {%- endif %}
     option(BUILD_TESTS "Build the project's test suite" OFF)
 
     # Set default build type if not specified
@@ -67,8 +67,8 @@ if(BUILD_TESTS)
 endif()
 
 include(GNUInstallDirs)
+{%- if project.type != "Executable" %}
 
-{% if project.type != "Executable" -%}
 #-----------------------------------------------------------------------------------------------------------------------
 # Installation
 #-----------------------------------------------------------------------------------------------------------------------
@@ -95,9 +95,9 @@ target_include_directories({{ project.name }}_headers
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
-{% endif %}
+{%- endif %}
+{%- if project.type == "Interface Library" %}
 
-{% if project.type == "Interface Library" %}
 #-----------------------------------------------------------------------------------------------------------------------
 # Target: {{ project.name }}
 # Alias: {{ project.namespace }}::{{ project.name }}
@@ -121,11 +121,11 @@ set_target_properties({{ project.name }} PROPERTIES
         OUTPUT_NAME {{ project.name }}
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
-        {% if language.name == "C" %}
+        {%- if language.name == "C" %}
         C_VISIBILITY_PRESET hidden
-        {% elif language.name == "C++" %}
+        {%- elif language.name == "C++" %}
         CXX_VISIBILITY_PRESET hidden
-        {% endif %}
+        {%- endif %}
         VISIBILITY_INLINES_HIDDEN ON
 )
 
@@ -138,15 +138,15 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
             ARCHIVE COMPONENT {{ project.name }}
             INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 endif()
-{% endif %}
+{%- endif %}
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Subdirectories
 #-----------------------------------------------------------------------------------------------------------------------
-{% if project.type != "Interface Library" %}
+{% if project.type != "Interface Library" -%}
 add_subdirectory(src)
-{% endif %}
 
+{% endif -%}
 if(BUILD_TESTS)
     add_subdirectory(tests)
 endif()
