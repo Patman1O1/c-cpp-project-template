@@ -26,7 +26,7 @@ class Project(object):
         self.language: Language = project_language
         self.type: str = project_type
         self.author: str = project_author
-        self.namespace: str = to_snake_case(project_namespace)
+        self.namespace: str = to_snake_case(project_namespace) if project_namespace != "" else self.name
         self.version: str = project_version
         self.description: str = project_description
 
