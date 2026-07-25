@@ -24,18 +24,18 @@ cmake_file_api(
 #-----------------------------------------------------------------------------------------------------------------------
 if(PROJECT_IS_TOP_LEVEL)
     # C Settings
-    {%- if language.name == "C" %}
+    {% if language.name == "C" %}
     set(CMAKE_C_STANDARD {{ language.std }})
     set(CMAKE_C_STANDARD_REQUIRED ON)
     set(CMAKE_C_EXTENSIONS OFF)
     set(CMAKE_C_VISIBILITY_PRESET hidden)
-    {%- elif language.name == "C++" %}
+    {% elif language.name == "C++" %}
     # C++ Settings
     set(CMAKE_CXX_STANDARD {{ language.std }})
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
     set(CMAKE_CXX_EXTENSIONS OFF)
     set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-    {%- endif %}
+    {% endif %}
     set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
     set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -121,11 +121,11 @@ set_target_properties({{ project.name }} PROPERTIES
         OUTPUT_NAME {{ project.name }}
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
-        {%- if language.name == "C" %}
+        {% if language.name == "C" %}
         C_VISIBILITY_PRESET hidden
-        {%- elif language.name == "C++" %}
+        {% elif language.name == "C++" %}
         CXX_VISIBILITY_PRESET hidden
-        {%- endif %}
+        {% endif %}
         VISIBILITY_INLINES_HIDDEN ON
 )
 
