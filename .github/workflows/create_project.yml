@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       language:
-        description: "The language the project will be in. Valid languages are C and C++"
+        description: "The language the project will be in."
         required: true
         type: choice
         options:
@@ -12,9 +12,7 @@ on:
           - "C++"
 
       type:
-        description: "The type of project that will be created. Valid types are
-                      \"Executable\", \"Static Library\", \"Shared Library\", and
-                      \"Interface Library\"."
+        description: "The type of project that will be created."
         required: true
         type: choice
         options:
