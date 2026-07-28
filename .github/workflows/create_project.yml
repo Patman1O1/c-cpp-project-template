@@ -6,7 +6,7 @@ on:
       language:
         description: "The language the project will be in. Valid languages are C and C++"
         required: true
-        type: choide
+        type: choice
         options:
           - "C"
           - "C++"
