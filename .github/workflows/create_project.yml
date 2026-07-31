@@ -68,7 +68,7 @@ jobs:
             "${{ github.event.inputs.language }}"          \
             "${{ github.event.inputs.type }}"              \
             "${{ github.actor }}"                          \
-            "${{ github.event.inputs.project_namespace }}" \
+            "${{ github.event.inputs.namespace }}"         \
             "0.1.0"                                        \
             "${{ github.event.repository.description }}"
 
