@@ -7,6 +7,7 @@ import shutil
 from jinja2 import Environment, FileSystemLoader
 
 # Local Imports
+from project import language
 from project.format import *
 from project.language import Language
 
@@ -81,6 +82,14 @@ class Project(object):
 
         # Remove .github/
         shutil.rmtree(Project.ROOT/".github")
+
+        if self.type == "Executable":
+            # Remove include/
+            shutil.rmtree(Project.ROOT/"include")
+        elif self.type == "Interface Library":
+            # Remove src/ and export.h/.hpp if the project type is an Interface Library
+            shutil.rmtree(Project.ROOT/"src")
+            os.unlink(Project.ROOT/"include"/f"{self.namespace}"/f"export{self.language.hdr_ext}"
 
         # Remove pyproject.toml
         os.unlink(Project.ROOT/"pyproject.toml")
