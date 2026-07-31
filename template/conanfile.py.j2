@@ -33,8 +33,8 @@ class {{ project.package_name }}(ConanFile):
         "build_tests": False
     }
 
-     def configure(self) -> None:
-     	if self.settings.build_type == "Debug":
+    def configure(self) -> None:
+        if self.settings.build_type == "Debug":
 	    self.options.build_tests.value = True
 
     def build_requirements(self) -> None:
