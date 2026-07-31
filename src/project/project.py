@@ -84,7 +84,7 @@ class Project(object):
         shutil.rmtree(Project.ROOT/".github")
 
         if self.type == "Executable":
-            # Remove include/
+            # Remove include/ if the project type is an Executable
             shutil.rmtree(Project.ROOT/"include")
         elif self.type == "Interface Library":
             # Remove src/ and export.h/.hpp if the project type is an Interface Library
@@ -93,7 +93,3 @@ class Project(object):
 
         # Remove pyproject.toml
         os.unlink(Project.ROOT/"pyproject.toml")
-
-        # Remove all .py source files at src/project/ if the project type
-        # is not an Interface Library
-        shutil.rmtree(Project.ROOT/"src"/"project")
