@@ -83,13 +83,5 @@ class Project(object):
         # Remove .github/
         shutil.rmtree(Project.ROOT/".github")
 
-        if self.type == "Executable":
-            # Remove include/ if the project type is an Executable
-            shutil.rmtree(Project.ROOT/"include")
-        elif self.type == "Interface Library":
-            # Remove src/ and export.h/.hpp if the project type is an Interface Library
-            shutil.rmtree(Project.ROOT/"src")
-            os.unlink(Project.ROOT/"include"/f"{self.namespace}"/f"export{self.language.hdr_ext}")
-
         # Remove pyproject.toml
         os.unlink(Project.ROOT/"pyproject.toml")
