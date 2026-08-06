@@ -88,5 +88,6 @@ class Project(object):
 
         if self.type != "Interface Library":
             shutil.rmtree(Project.ROOT/"src"/"project")
+            shutil.rmtree(Project.ROOT/"src"/"c_cpp_project_template.egg-info")
         else:
             shutil.rmtree(Project.ROOT/"src")
