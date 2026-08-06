@@ -78,7 +78,7 @@ class Project(object):
             readme_md.write(f"# {self.name}\n\n{self.description}\n")
 
         # Remove template/
-        shutil.rmtree(template_dir)
+        shutil.rmtree(Project.ROOT/template_dir)
 
         # Remove .github/
         shutil.rmtree(Project.ROOT/".github")
