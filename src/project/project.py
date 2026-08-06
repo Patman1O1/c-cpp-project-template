@@ -85,3 +85,9 @@ class Project(object):
 
         # Remove pyproject.toml
         os.unlink(Project.ROOT/"pyproject.toml")
+
+        if self.type != "Interface Library":
+            shutil.rmtree(Project.ROOT/"src"/"project")
+            shutil.rmtree(Project.ROOT/"src"/"c-cpp-project-template.egg-info")
+        else:
+            shutil.rmtree(Project.ROOT/"src")
