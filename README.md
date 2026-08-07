@@ -233,3 +233,9 @@ Executable, Static Library, Shared Library, and Interface Library.
 ```
 
 ## Template Parameters: `project_namespace`
+The name that will be applied to CMake targets and is the name of the directory
+that all header files will be under. For example, if the namespace is
+`my_namespace`, then all CMake target will have the alias
+`my_namespace::<target_name>` where `<target_name>` is the name of the CMake
+target. Additionally, all header files will be stored in the directory
+`<project_root>/include/my_namespace`.
