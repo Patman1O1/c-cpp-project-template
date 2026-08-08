@@ -38,7 +38,7 @@ defaults:
 
 jobs:
   create_project:
-    if: github.repository != 'Patman1O1/c-cxx-project-template'
+    if: github.repository != 'Patman1O1/c-cpp-project-template'
     runs-on: ubuntu-latest
 
     steps:
