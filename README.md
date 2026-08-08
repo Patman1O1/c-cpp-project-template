@@ -3,19 +3,18 @@
 ## Overview
 A template repository for C/C++ projects with CMake and Conan. A GitHub Action 
 workflow is provided with the on `workflow_dispatch` event. This event has three input
-parameters which are `project_lang`, `project_type`, and `project_namespace`.
-`project_lang` is the language the project will be generated in. As the name of this
-template repo might suggest, the only available options are C and C++. For
-`project_type`, one can choose from Executable, Static Library, Shared Library, or
-Interface Library. The last  parameter, `project_namespace`, is optional and defaults 
-to the name of the GitHub repository name. 
+parameters which are `language`, `type`, and `namespace`. `language` is the language 
+the project will be generated in. As the name of this template repo might suggest,
+the only available options are C and C++. For `type`, one can choose from Executable,
+Static Library, Shared Library, or Interface Library. The last  parameter, `namespace`,
+is optional and defaults to the name of the GitHub repository name. 
 
-## Template Parameters: `project_lang`
-`project_lang` is the language the template will be generated in. As the name of this
+## Template Parameters: `language`
+`language` is the language the template will be generated in. As the name of this
 template repository might suggest, the only available options are C and C++
 
-## Template Parameters: `project_type`
-`project_type` determines how the project will be generated. The supported types are
+## Template Parameters: `type`
+`type` determines how the project will be generated. The supported types are
 Executable, Static Library, Shared Library, and Interface Library.
 
 ### Project Types: Executable
@@ -232,7 +231,7 @@ Executable, Static Library, Shared Library, and Interface Library.
 └── README.md
 ```
 
-## Template Parameters: `project_namespace`
+## Template Parameters: `namespace`
 The name that will be applied to CMake targets and is the name of the directory
 that all header files will be under. For example, if the namespace is
 `my_namespace`, then all CMake target will have the alias
