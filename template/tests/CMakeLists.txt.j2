@@ -1,34 +1,34 @@
 {% if language.name == "C" %}
-#-----------------------------------------------------------------------------------------------------------------------
-# Settings
-#-----------------------------------------------------------------------------------------------------------------------
+# ── Settings ─────────────────────────────────────────────────────────────────
 enable_language(CXX)
 set(CMAKE_CXX_STANDARD {{ language.std }})
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 {% endif %}
-#-----------------------------------------------------------------------------------------------------------------------
-# Google Test
-#-----------------------------------------------------------------------------------------------------------------------
+# ── Google Test ──────────────────────────────────────────────────────────────
 include(GoogleTest)
 enable_testing()
 
-#-----------------------------------------------------------------------------------------------------------------------
+# ───────────────────────────────────────────────────────────────────────────── 
 # Target: {{ project.name }}_test
 # Alias: {{ project.namespace }}::{{ project.name }}_test
 # Type: Executable
 {% if project.type != "Executable" %}
-# Dependencies: GTest::gtest_main, GTest::gmock_main, {{ project.namespace }}::{{ project.name }}_headers
+# Dependencies: GTest::gtest_main,
+#               GTest::gmock_main,
+#               {{ project.namespace }}::{{ project.name }}_headers
 {% else %}
 # Dependencies: GTest::gtest_main, GTest::gmock_main
 {% endif %}
-#-----------------------------------------------------------------------------------------------------------------------
+# ─────────────────────────────────────────────────────────────────────────────
 # Target definition
 add_executable({{ project.name }}_test)
 
 # Target alias
-add_executable({{ project.namespace }}::{{ project.name }}_test ALIAS {{ project.name }}_test)
+add_executable({{ project.namespace }}::{{ project.name }}_test
+    ALIAS {{ project.name }}_test
+)
 
 # Target sources
 target_sources({{ project.name }}_test
