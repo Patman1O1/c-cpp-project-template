@@ -1,6 +1,4 @@
-#-----------------------------------------------------------------------------------------------------------------------
-# Information
-#-----------------------------------------------------------------------------------------------------------------------
+# ── Information ──────────────────────────────────────────────────────────────
 cmake_minimum_required(VERSION {{ cmake_version }})
 project("{{ project.name }}"
         VERSION {{ project.version }}
@@ -19,9 +17,7 @@ cmake_file_api(
         CODEMODEL 2.3
 )
 
-#-----------------------------------------------------------------------------------------------------------------------
-# Settings
-#-----------------------------------------------------------------------------------------------------------------------
+# ── Settings ─────────────────────────────────────────────────────────────────
 if(PROJECT_IS_TOP_LEVEL)
     {% if language.name == "C" %}
     # C Settings
@@ -55,13 +51,16 @@ if(PROJECT_IS_TOP_LEVEL)
     # Set default build type if not specified
     if(NOT DEFINED CMAKE_BUILD_TYPE AND NOT DEFINED CMAKE_CONFIGURATION_TYPES)
         set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
-        set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+        set_property(
+            CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug"
+                                                    "Release"
+                                                    "MinSizeRel"
+                                                    "RelWithDebInfo"
+        )
     endif()
 endif()
 
-#-----------------------------------------------------------------------------------------------------------------------
-# Dependencies
-#-----------------------------------------------------------------------------------------------------------------------
+# ── Dependencies ─────────────────────────────────────────────────────────────
 if(BUILD_TESTS)
     find_package(GTest REQUIRED)
 endif()
@@ -69,25 +68,26 @@ endif()
 include(GNUInstallDirs)
 {% if project.type != "Executable" %}
 
-#-----------------------------------------------------------------------------------------------------------------------
-# Installation
-#-----------------------------------------------------------------------------------------------------------------------
+# ── Installation ─────────────────────────────────────────────────────────────
 if(NOT CMAKE_SKIP_INSTALL_RULES)
     # Install headers
     install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
             TYPE INCLUDE)
 endif()
 
-#-----------------------------------------------------------------------------------------------------------------------
+# ─────────────────────────────────────────────────────────────────────────────
 # Target: {{ project.name }}_headers
 # Alias: {{ project.namespace }}::{{ project.name }}_headers
 # Type: Interface Library
-#-----------------------------------------------------------------------------------------------------------------------
+# ───────────────────────────────────────────────────────────────────────────── 
 # Target definition
 add_library({{ project.name }}_headers INTERFACE)
 
 # Target alias
-add_library({{ project.namespace }}::{{ project.name }}_headers ALIAS {{ project.name }}_headers)
+add_library({{ project.namespace }}::{{ project.name }}_headers 
+    ALIAS
+        {{ project.name }}_headers
+)
 
 # Target headers
 target_include_directories({{ project.name }}_headers
@@ -98,17 +98,20 @@ target_include_directories({{ project.name }}_headers
 {% endif %}
 {% if project.type == "Interface Library" %}
 
-#-----------------------------------------------------------------------------------------------------------------------
+# ─────────────────────────────────────────────────────────────────────────────
 # Target: {{ project.name }}
 # Alias: {{ project.namespace }}::{{ project.name }}
 # Type: {{ project.type }}
 # Dependencies: {{ project.namespace }}::{{ project.name }}_headers
-#-----------------------------------------------------------------------------------------------------------------------
+# ─────────────────────────────────────────────────────────────────────────────
 # Target definition
 add_library({{ project.name }} INTERFACE)
 
 # Target alias
-add_library({{ project.namespace }}::{{ project.name }} ALIAS {{ project.name }})
+add_library({{ project.namespace }}::{{ project.name }}
+    ALIAS
+        {{ project.name }}
+)
 
 # Target dependencies
 target_link_libraries({{ project.name }}
@@ -140,9 +143,7 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
 endif()
 {% endif %}
 
-#-----------------------------------------------------------------------------------------------------------------------
-# Subdirectories
-#-----------------------------------------------------------------------------------------------------------------------
+# ── Subdirectories ───────────────────────────────────────────────────────────
 {% if project.type != "Interface Library" %}
 add_subdirectory(src)
 
