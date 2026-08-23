@@ -1,6 +1,4 @@
-#-----------------------------------------------------------------------------------------------------------------------
-# Information
-#-----------------------------------------------------------------------------------------------------------------------
+# ── Informations ─────────────────────────────────────────────────────────────
 cmake_minimum_required(VERSION {{ cmake_version }})
 project("test_package"
         VERSION 0.1.0
@@ -19,9 +17,7 @@ cmake_file_api(
         CODEMODEL 2.3
 )
 
-#-----------------------------------------------------------------------------------------------------------------------
-# Settings
-#-----------------------------------------------------------------------------------------------------------------------
+# ── Settings ─────────────────────────────────────────────────────────────────
 if(PROJECT_IS_TOP_LEVEL)
     {% if language.name == "C" %}
     # C Settings
@@ -47,17 +43,18 @@ if(PROJECT_IS_TOP_LEVEL)
     # Set default build type if not specified
     if(NOT DEFINED CMAKE_BUILD_TYPE AND NOT DEFINED CMAKE_CONFIGURATION_TYPES)
         set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
-        set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+        set_property(
+            CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug"
+                                                    "Release"
+                                                    "MinSizeRel"
+                                                    "RelWithDebInfo"
+        )
     endif()
 endif()
 
-#-----------------------------------------------------------------------------------------------------------------------
-# Dependencies
-#-----------------------------------------------------------------------------------------------------------------------
+# ── Dependencies ─────────────────────────────────────────────────────────────
 find_package({{ project.name }} REQUIRED)
 include(GNUInstallDirs)
 
-#-----------------------------------------------------------------------------------------------------------------------
-# Subdirectories
-#-----------------------------------------------------------------------------------------------------------------------
+# ── Subdirectories ───────────────────────────────────────────────────────────
 add_subdirectory(src)
