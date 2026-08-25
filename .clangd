@@ -1,10 +1,2 @@
-If:
-  PathMatch: .*\.(cpp|cxx|cc|hpp|h)
 CompileFlags:
-  Add: [-std=c++26]
-
----
-If:
-  PathMatch: .*\.c
-CompileFlags:
-  Add: [-std=c23]
+    CompilationDatabase: .clang/
